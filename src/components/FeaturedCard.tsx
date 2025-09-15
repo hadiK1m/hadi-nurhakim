@@ -6,27 +6,25 @@ import { ArrowUpRight } from 'lucide-react';
 import { useRef, useLayoutEffect, useState } from 'react';
 
 // REVISI: Teks disesuaikan agar cocok dengan gambar
-const fullText = "Representing brands as the source for inspiration and style.";
+const fullText = "The Future of Fashion: Embracing Sustainability and Innovation in Style";
+// Tentukan jumlah huruf per baris, misal baris pertama 28 huruf, baris kedua 15 huruf
+const charsPerLine = [28, 22, 16];
 
-// Tentukan jumlah kata per baris
-const wordsPerLine = [5, 3, 3];
-
-function splitToLinesByWords(text: string, wordsPerLine: number[]) {
-  const words = text.split(" ");
+function splitToLinesByChars(text: string, charsPerLine: number[]) {
   const lines = [];
   let idx = 0;
-  for (let count of wordsPerLine) {
-    lines.push(words.slice(idx, idx + count).join(" "));
+  for (let count of charsPerLine) {
+    lines.push(text.slice(idx, idx + count));
     idx += count;
   }
   return lines;
 }
 
-const lines = splitToLinesByWords(fullText, wordsPerLine);
+const lines = splitToLinesByChars(fullText, charsPerLine);
 
-// REVISI KUNCI: pathGenerators disesuaikan secara presisi untuk setiap baris
+// Path generators untuk 2 baris
 const pathGenerators = [
-  // Baris pertama: Kiri siku, kanan bawah melengkung (kanan atas lurus)
+  // Baris pertama: Kiri siku, kanan bawah melengkung
   (width: number, height: number) => `
     M0,0
     H${width}
@@ -36,17 +34,7 @@ const pathGenerators = [
     V0
     Z
   `,
-  // Baris kedua: Kiri siku, kanan bawah melengkung (kanan atas lurus)
-  (width: number, height: number) => `
-    M0,0
-    H${width}
-    V${height - 20}
-    Q${width},${height} ${width - 30},${height}
-    H0
-    V0
-    Z
-  `,
-  // Baris ketiga: Kiri siku, kanan bawah melengkung (kanan atas lurus)
+  // Baris kedua: Kiri siku, kanan bawah melengkung
   (width: number, height: number) => `
     M0,0
     H${width}
@@ -73,8 +61,8 @@ export default function FeaturedCard() {
     return () => clearTimeout(timeoutId);
   }, [lines]); // Bergantung pada lines agar re-render jika teks berubah
 
-  const paddingX = 28; // Sedikit lebih besar untuk memberi ruang lengkungan
-  const lineHeight = 40;
+  const paddingX = 8; // Sedikit lebih besar untuk memberi ruang lengkungan
+  const lineHeight = 20;
 
   return (
     <div className="relative w-full aspect-[4/3] bg-[#F3EFEA] dark:bg-card rounded-xl overflow-hidden">
@@ -83,8 +71,18 @@ export default function FeaturedCard() {
           {lines.map((text, idx) => {
             const textWidth = lineWidths[idx] || 0;
             const svgWidth = textWidth + paddingX * 2;
-            const height = lineHeight + 20; // Tambahkan tinggi latar belakang, misal +16px
+            const height = lineHeight + 20;
             const generatePath = pathGenerators[idx] || pathGenerators[pathGenerators.length - 1];
+
+            // Style umum untuk semua baris
+            const textStyle = {
+              lineHeight: `${lineHeight}px`,
+              paddingLeft: 0,
+              paddingRight: paddingX,
+              height: `${height}px`,
+              display: "flex",
+              alignItems: "center",
+            };
 
             return (
               <div key={idx} className="relative" style={{ height }}>
@@ -99,15 +97,8 @@ export default function FeaturedCard() {
                 </svg>
                 <div
                   ref={el => { lineRefs.current[idx] = el; }}
-                  className="relative text-2xl md:text-3xl font-bold text-foreground whitespace-nowrap text-left"
-                  style={{
-                    lineHeight: `${lineHeight}px`,
-                    paddingLeft: 0,
-                    paddingRight: paddingX,
-                    height: `${height}px`, // Set tinggi latar belakang pada teks
-                    display: "flex",
-                    alignItems: "center",
-                  }}
+                  className="relative text-2xl pb-2.5 md:text-3xl font-bold text-foreground text-left"
+                  style={textStyle}
                 >
                   {text}
                 </div>
@@ -126,7 +117,7 @@ export default function FeaturedCard() {
         </span>
       </div>
 
-      <div className="absolute left-6 top-1/2 -translate-y-1/2 z-10 w-12 h-12 bg-card rounded-full flex items-center justify-center cursor-pointer shadow-md">
+      <div className="absolute bottom-6 left-6 z-10 w-12 h-12 bg-card rounded-full flex items-center justify-center cursor-pointer shadow-md">
         <ArrowUpRight className="h-6 w-6 text-foreground" />
       </div>
 
