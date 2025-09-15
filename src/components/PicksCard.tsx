@@ -6,7 +6,7 @@ export default function PicksCard() {
   return (
     <div className="relative w-full h-[300px] rounded-xl overflow-hidden flex flex-col justify-between p-6">
       <Image
-        src="/model-image.jpg" // Pastikan gambar ada di /public
+        src="/main-image.jpg" // Pastikan gambar ada di /public
         alt="Man in pink suit"
         fill
         className="object-cover z-0"
