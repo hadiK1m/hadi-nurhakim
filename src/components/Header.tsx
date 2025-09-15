@@ -1,7 +1,6 @@
-// src/components/Header.tsx
 import React from 'react';
 import { Search } from 'lucide-react';
-import { Button } from '@/components/ui/button'; // Impor Button shadcn
+import { Button } from '@/components/ui/button';
 
 const NavLink = ({ children }: { children: React.ReactNode }) => (
   <a href="#" className="text-sm text-muted-foreground hover:text-foreground">

@@ -1,4 +1,3 @@
-// src/app/page.tsx
 import AdCard from "@/components/AdCard";
 import FeaturedCard from "@/components/FeaturedCard";
 import Header from "@/components/Header";
@@ -6,9 +5,7 @@ import PicksCard from "@/components/PicksCard";
 
 export default function Home() {
   return (
-    // bg-background akan otomatis menjadi abu-abu muda/gelap
     <main className="bg-background min-h-screen p-4 sm:p-8"> 
-      {/* bg-card akan menjadi putih/sedikit lebih terang dari background */}
       <div className="max-w-7xl mx-auto bg-card rounded-xl shadow-sm"> 
         <Header />
         

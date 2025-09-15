@@ -1,4 +1,3 @@
-// src/components/FeaturedCard.tsx
 import Image from 'next/image';
 import { ArrowUpRight } from 'lucide-react';
 
@@ -6,15 +5,12 @@ export default function FeaturedCard() {
   return (
     <div className="relative w-full h-[500px] rounded-xl overflow-hidden text-white p-8 flex flex-col justify-between">
       <Image
-        src="/main-image.jpg" // Pastikan gambar ada di /public
+        src="/main-image.jpg"
         alt="People wearing hats"
-        fill // 'fill' lebih modern daripada 'layout="fill"'
+        fill
         className="object-cover z-0"
       />
-      
-      {/* Overlay Gelap untuk Kontras */}
       <div className="absolute inset-0 bg-black/20 z-0"></div>
-
       <div className="relative z-10">
         <div className="flex flex-col items-start gap-2 mb-4">
           <span className="bg-black/30 backdrop-blur-sm text-xs font-semibold py-1.5 px-3 rounded-full">
